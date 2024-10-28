@@ -9,11 +9,3 @@ database:         # External database configuration
 admin:            # Local admin credentials
   email: "admin@test.com"
   password: "admin"
-
-# monitoring:       # Connection to the Cortex Monitoring container
-#   cortex-url: http://conduktor-monitoring:9009/
-#   alert-manager-url: http://conduktor-monitoring:9010/
-#   callback-url: http://conduktor-console:8080/monitoring/api/
-#   notifications-callback-url: http://localhost:8080
-
-# license: ""     # Enterprise license key

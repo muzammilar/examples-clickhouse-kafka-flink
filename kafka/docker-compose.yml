@@ -86,12 +86,6 @@ services:
       LOG4J_ROOT_LOGLEVEL: INFO
       SCHEMA_REGISTRY_KAFKASTORE_TIMEOUT_MS: 2000
       SCHEMA_REGISTRY_KAFKASTORE_INIT_TIMEOUT_MS: 30000
-      # PLUGIN_PATH: /kafka/connect
-
-      # Remove Debezium connector configurations from environment variables
-      # Connector configurations should be provided via the REST API or a configuration file
-    # volumes:
-      # - ./kafka-connect:/kafka/connect
 
 
   mysql:
@@ -116,33 +110,6 @@ services:
     volumes:
       - ./scripts/first_migration.sql:/docker-entrypoint-initdb.d/first_migration.sql  # Mount the SQL file directly
 
-
-  # redpanda-console:
-  #   image: docker.redpanda.com/vectorized/console:v2.2.3
-  #   platform: linux/amd64
-  #   labels:
-  #     - "app=kafka-stack"
-  #   depends_on:
-  #     kafka:
-  #       condition: service_healthy
-  #     schema-registry:
-  #       condition: service_healthy
-  #   ports:
-  #     - "8085:8080"
-  #   environment:
-  #     KAFKA_BROKERS: "kafka:9092"
-  #     SCHEMAREGISTRY_ENABLED: "true"
-  #     SCHEMAREGISTRY_URLS: "http://schema-registry:8081"
-  #     SERVER_LISTEN_ADDRESS: "0.0.0.0:8080"
-  #     CONSOLE_FEATURES: "SCHEMA_REGISTRY,TOPIC_MESSAGES,CONSUMER_GROUPS"
-  #     TOPIC_DEFAULTS_MESSAGE_KEY_ENCODING: "AVRO"
-  #     TOPIC_DEFAULTS_MESSAGE_VALUE_ENCODING: "AVRO"
-  #   # volumes:
-  #   #   - ./scripts/redpanda-console/config.yml:/etc/console/config.yml
-  #   # volumes:
-  #   #   - ./scripts/redpanda-console/config.yml:/etc/console/config.yml
-  #   # environment:
-  #   #   CONFIG_FILEPATH: /etc/console/config.yml
 
 
   connector-registrator:
@@ -176,9 +143,6 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      # - ./scripts/postgres-init.sql:/docker-entrypoint-initdb.d/postgres-init.sql
-    # networks:
-    #   - default
 
 
   conduktor-platform:
@@ -199,11 +163,7 @@ services:
     environment:
       KAFKA_BROKERS: "kafka:9092"
       SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
-      # CDK_DATABASE_URL: "jdbc:postgresql://postgres:5432/conduktor?user=conduktor&password=conduktor"
       CDK_IN_CONF_FILE: /opt/conduktor/console-config.yaml
-    # networks:
-    #   - default
-
 
 volumes:
   postgres_data:

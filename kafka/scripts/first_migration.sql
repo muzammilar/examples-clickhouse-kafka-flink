@@ -60,6 +60,7 @@ CREATE TABLE products (
     name VARCHAR(255) NOT NULL,
     description TEXT,
     price DECIMAL(10, 2) NOT NULL,
+    cost_price  DECIMAL(10, 2) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -81,6 +82,7 @@ CREATE TABLE order_items (
     product_id INT NOT NULL,
     quantity INT NOT NULL DEFAULT 1,
     price DECIMAL(10, 2) NOT NULL,
+    cost_price  DECIMAL(10, 2) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
@@ -89,11 +91,11 @@ CREATE TABLE order_items (
 
 -- Sample data insertion
 INSERT INTO
-    products (name, description, price)
+    products (name, description, price, cost_price)
 VALUES
-    ('Product A', 'Description of product A', 29.99),
-    ('Product B', 'Description of product B', 19.99),
-    ('Product C', 'Description of product C', 9.99);
+    ('Product A', 'Description of product A', 29.99, 20.0),
+    ('Product B', 'Description of product B', 19.99, 15.0),
+    ('Product C', 'Description of product C', 9.99, 5.0);
 
 INSERT INTO
     orders (customer_name, status, total_amount)
@@ -102,11 +104,11 @@ VALUES
     ('Jane Smith', 'pending', 29.99);
 
 INSERT INTO
-    order_items (order_id, product_id, quantity, price)
+    order_items (order_id, product_id, quantity, price, cost_price)
 VALUES
-    (1, 1, 1, 29.99),
-    (1, 2, 1, 29.99),
-    (2, 3, 1, 29.99);
+    (1, 1, 1, 29.99, 20.0),
+    (1, 2, 1, 19.99, 15.0),
+    (2, 3, 1, 9.99, 5.0);
 
 -- Ensure all changes are saved
 COMMIT;
